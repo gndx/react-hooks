@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
 const HelloRickAndMorty = () => {
-  const [character, useCharacters] = useState({
-    name: null,
-    avatar: null,
-  });
-
-  let persons;
+  const [characters, useCharacters] = useState([]);
 
   useEffect(() => {
-    persons = fetch('https://rickandmortyapi.com/api/character/1')
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (myData) {
-        useCharacters({
-          name: myData.name,
-          avatar: myData.image,
-        })
-      });
+    fetch('https://rickandmortyapi.com/api/character/')
+      .then(response => response.json())
+      .then(data => useCharacters(data.results));
   }, []);
 
-  return character.name === null ? (<h1>Cargando...</h1>) : (
+  return (
     <>
-      <p>{character.name}</p>
-      <img src={character.avatar} alt={character.name} />
+      {characters.map(character => (
+        <div>
+          <h2>{character.name}</h2>
+          <img src={character.image} alt={character.name} />
+        </div>
+      ))}
     </>
-  )
+  );
 }
 
 export default HelloRickAndMorty;
