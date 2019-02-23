@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 const HelloRickAndMorty = () => {
   const [character, useCharacters] = useState({
-    name: '',
-    avatar: '',
+    name: null,
+    avatar: null,
   });
 
   let persons;
@@ -21,7 +21,7 @@ const HelloRickAndMorty = () => {
       });
   }, []);
 
-  return (
+  return character.name === null ? (<h1>Cargando...</h1>) : (
     <>
       <p>{character.name}</p>
       <img src={character.avatar} alt={character.name} />
